@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "boilerplate": "^0.6.1",
+    "express": "^4.17.2"
+  },
+  "name": "backend",
+  "description": "test",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robin500818167/Backend.git"
+  },
+  "author": "Robin van Houten",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robin500818167/Backend/issues"
+  },
+  "homepage": "https://github.com/robin500818167/Backend#readme"
+}
