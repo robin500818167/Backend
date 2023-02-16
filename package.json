@@ -2,7 +2,9 @@
   "dependencies": {
     "boilerplate": "^0.6.1",
     "camelcase": "^7.0.1",
-    "express": "^4.17.2"
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.7",
+    "hbs": "^4.2.0"
   },
   "name": "backend",
   "description": "test",
