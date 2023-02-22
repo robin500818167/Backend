@@ -1,9 +1,14 @@
- <section id="profile">
-        <h1 class="profiletext"> {{profile.username}}</h1>
-        <h1 class="profiletext"> {{username}}</h1>
-    </section>  
+<section>
+        <h2>Inloggen</h2>
 
-    <section id="info">
-        <h2 class="profileinfo"> {{profile.email}}</h2>
-        <h2 class="profileinfo"> {{profile.follow}}</h2>
-    </section>  
+        <form action="/inloggen" method="post">
+            <label for="fname"></label>
+            <input type="text" id="username" name="username" placeholder="Naam">
+            <label for="password"></label>
+            <input type="password" id="password" name="password" placeholder="Wachtwoord">
+            <input type="submit" value="Inloggen">
+            <label id="error"></label>
+        </form>
+
+        <p>Nog geen account?<a href="/registreren">Meld je nu aan!</a></p>
+    </section>
