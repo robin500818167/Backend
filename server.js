@@ -6,6 +6,7 @@ const bodyparser = require('body-parser')
 const port = process.env.PORT || 1337
 const connection = require("./database/connection")
 const path = require('path')
+const session = require('express-session')
 require('dotenv').config()
 
 // Database connection
@@ -25,6 +26,13 @@ app.engine('.hbs', engine({
 
 app.set('view engine', '.hbs')
 app.set("views", "./views")
+app.set("trust proxy", 1)
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {},
+  })
 
 app.get('/', (req, res) => {
   res.render('main');
@@ -59,10 +67,19 @@ app.post('/registreren', async (req, res) => {
 app.post('/uitloggen', (req, res) => {
   res.redirect('/');
 });
-app.post('/inloggen', (req, res) => {
-  res.redirect('/account');
-});
 
+app.post("/inloggen", async (req, res) => {
+  console.log(req.body);
+  const currentUser = await User.findOne({
+    username: req.body.username,
+  });
+  req.session.user = {
+    username: currentUser.username,
+    password: currentUser.password,
+    email: currentUser.email,
+  };
+  res.redirect("/account");
+});
 app.post('/update', (req, res) => {
   User.updateOne({
       username: req.body.username
