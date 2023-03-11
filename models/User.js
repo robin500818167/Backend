@@ -17,14 +17,4 @@ const UserSchema = new Schema({
 });
 
 const User = mongoose.model("User", UserSchema)
-
-collections.create({
-    username: "robinvhouten",
-    email: "robinnikita@hotmail.com",
-    password: "Backend23"
-  }).then((ans) => {
-    console.log("Document inserted")
-  }).catch((err) => {
-    console.log(err.Message);
-  })
 module.exports = User

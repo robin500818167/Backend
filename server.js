@@ -1,6 +1,6 @@
 const express = require('express')
 const { engine } = require('express-handlebars')
-const User = require("/models/User")
+const User = require("./models/User")
 const app = express();
 const bodyparser = require('body-parser')
 const port = process.env.PORT || 1337
@@ -52,14 +52,6 @@ app.post('/registreren', async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password
-  });
-
-  newUser.save((error) => {
-      if (error) {
-          console.log(error);
-          return res.status(500).redirect('/registreren');
-      }
-      return res.status(200).redirect('/');
   });
 });
 
