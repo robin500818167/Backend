@@ -53,6 +53,9 @@ app.post('/registreren', async (req, res) => {
       email: req.body.email,
       password: req.body.password
   });
+  newUser.save()
+  res.location('/home');
+  res.redirect('/home');
 });
 
 app.post('/uitloggen', (req, res) => {
