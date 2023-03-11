@@ -34,17 +34,16 @@ app.get('/registreren', (req, res) => {
   res.render('registreren');
 });
 
-app.get('/account', (req, res) => {
-User.find({
+app.get('/account', async(req,res) => {
+const currentUser = await User.findOne({
   username: req.body.username
-}).then((documents) => {
-  let username = documents.map(User => User.username);
-  let email = documents.map(User => User.email);
-    res.render('account', {
+})
+console.log(currentUser)
+  res.render('account', {
       username: username,
       email: email
-    });
-      })
+    })
+     
   })
 
 app.post('/registreren', async (req, res) => {
