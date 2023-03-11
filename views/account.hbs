@@ -1,7 +1,8 @@
 <section>
         <form action="/uitloggen" method="post">
-            <input type="submit" value="">
+            <input type="submit" value="Uitloggen">
         </form>
+        <h1>{{username}}</h1>
         <form action="/update" method="post">
             <input type="text" id="username" name="username" placeholder="Gebruikersnaam" value="{{username}}"
                 required>
@@ -11,3 +12,4 @@
             <input type="submit" value="Opslaan">
         </form>
     </section>
+    <script>console.log(username)</script>

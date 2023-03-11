@@ -53,13 +53,15 @@ app.post('/registreren', async (req, res) => {
       email: req.body.email,
       password: req.body.password
   });
-  newUser.save()
-  res.location('/home');
-  res.redirect('/home');
+  await newUser.save() 
+  res.location('/account');
+  res.redirect('/account');
 });
-
 app.post('/uitloggen', (req, res) => {
   res.redirect('/');
+});
+app.post('/inloggen', (req, res) => {
+  res.redirect('/account');
 });
 
 app.post('/update', (req, res) => {
