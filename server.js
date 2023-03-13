@@ -27,12 +27,14 @@ app.engine('.hbs', engine({
 app.set('view engine', '.hbs')
 app.set("views", "./views")
 app.set("trust proxy", 1)
+app.use(
   session({
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: true,
     cookie: {},
   })
+);
 
 app.get('/', (req, res) => {
   res.render('main');
@@ -43,15 +45,11 @@ app.get('/registreren', (req, res) => {
 });
 
 app.get('/account', async(req,res) => {
-const currentUser = await User.findOne({
-  username: req.body.username
-})
-console.log(currentUser)
+  const {username, email} = req.session.user
   res.render('account', {
       username: username,
-      email: email
-    })
-     
+    email: email
+  })
   })
 
 app.post('/registreren', async (req, res) => {
