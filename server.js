@@ -1,7 +1,7 @@
 const express = require('express')
 const { engine } = require('express-handlebars')
 const User = require("./models/User")
-const app = express();
+const app = express()
 const bodyparser = require('body-parser')
 const port = process.env.PORT || 1337
 const connection = require("./database/connection")
@@ -13,7 +13,7 @@ require('dotenv').config()
 connection()
 
 // Statische data
-app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static(path.join(__dirname, 'public')))
 
 app.use(bodyparser.urlencoded({
   extended: true
@@ -22,7 +22,7 @@ app.use(bodyparser.urlencoded({
 app.engine('.hbs', engine({
   extname: '.hbs',
   defaultLayout: 'index'
-}));
+}))
 
 app.set('view engine', '.hbs')
 app.set("views", "./views")
@@ -34,15 +34,15 @@ app.use(
     saveUninitialized: true,
     cookie: {},
   })
-);
+)
 
 app.get('/', (req, res) => {
-  res.render('main');
-});
+  res.render('main')
+})
 
 app.get('/registreren', (req, res) => {
-  res.render('registreren');
-});
+  res.render('registreren')
+})
 
 app.get('/account', async(req,res) => {
   const {username, email} = req.session.user
@@ -57,39 +57,40 @@ app.post('/registreren', async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password
-  });
+  })
   await newUser.save() 
-  res.location('/account');
-  res.redirect('/account');
-});
+  res.location('/account')
+  res.redirect('/account')
+})
 app.post('/uitloggen', (req, res) => {
-  req.session.destroy();
-  res.redirect('/');
-});
+  req.session.destroy()
+  res.redirect('/')
+})
 
 app.post("/inloggen", async (req, res) => {
   const currentUser = await User.findOne({
     username: req.body.username,
-  });
+  })
   req.session.user = {
     username: currentUser.username,
     password: currentUser.password,
     email: currentUser.email,
-  };
-  res.redirect("/account");
-});
-app.post('/update', (req, res) => {
-  User.updateOne({
-      username: req.body.username
+  }
+  res.redirect("/account")
+})
+app.post('/update', async (req, res) => {
+  await User.updateOne({
+      username: req.session.user
   }, {
       username: req.body.username,
       email: req.body.email
-  }).exec();
-  req.body.username = req.body.username;
-  res.redirect('/account');
+  }).exec()
+  req.session.user.username = req.body.username, 
+  req.session.user.email = req.body.email
+  res.redirect('/account')
 })
 app.get('*', (req, res) => {
-  res.render('404');
-});
+  res.render('404')
+})
 
-app.listen(port);
+app.listen(port)
