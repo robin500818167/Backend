@@ -63,11 +63,11 @@ app.post('/registreren', async (req, res) => {
   res.redirect('/account');
 });
 app.post('/uitloggen', (req, res) => {
+  req.session.destroy();
   res.redirect('/');
 });
 
 app.post("/inloggen", async (req, res) => {
-  console.log(req.body);
   const currentUser = await User.findOne({
     username: req.body.username,
   });
