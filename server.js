@@ -13,8 +13,9 @@ require('dotenv').config()
 connection()
 
 // Statische data
-app.use('/static', express.static(path.join(__dirname, 'public')))
+app.use('/static', express.static(path.join(__dirname, 'static')))
 
+// Bodyparser
 app.use(bodyparser.urlencoded({
   extended: true
 }))
@@ -24,8 +25,11 @@ app.engine('.hbs', engine({
   defaultLayout: 'index'
 }))
 
+//Views
 app.set('view engine', '.hbs')
 app.set("views", "./views")
+
+//Session
 app.set("trust proxy", 1)
 app.use(
   session({
@@ -35,7 +39,7 @@ app.use(
     cookie: {},
   })
 )
-
+//Routes
 app.get('/', (req, res) => {
   res.render('main')
 })
@@ -78,17 +82,20 @@ app.post("/inloggen", async (req, res) => {
   }
   res.redirect("/account")
 })
-app.post('/update', async (req, res) => {
-  await User.updateOne({
-      username: req.session.user
-  }, {
+app.post("/update", async (req, res) => {
+  await User.findOneAndUpdate(
+    {
+      username: req.session.user.username,
+    },
+    {
       username: req.body.username,
-      email: req.body.email
-  }).exec()
-  req.session.user.username = req.body.username, 
-  req.session.user.email = req.body.email
-  res.redirect('/account')
-})
+      email: req.body.email,
+    }
+  );
+  req.session.user.username = req.body.username;
+  req.session.user.email = req.body.email;
+  res.redirect("/account");
+});
 app.get('*', (req, res) => {
   res.render('404')
 })
